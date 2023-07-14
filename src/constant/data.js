@@ -12,7 +12,7 @@ export const menuItems = [
   {
     title: "Clients",
     icon: "lucide:users",
-    link: "dashboard",
+    link: "users",
     child: [
       {
         childtitle: "Liste des clients",
@@ -22,7 +22,36 @@ export const menuItems = [
       {
         childtitle: "Ajouter Client",
         childlink: "add-user",
-        childicon: "mdi:users-add-outline"
+      }
+    ]
+  },
+  {
+    title: "Appareils",
+    icon: "ph:cpu",
+    link: "devices",
+    child: [
+      {
+        childtitle: "Liste des Appareils",
+        childlink: "devices-list",
+      },
+      {
+        childtitle: "Ajouter Appareil",
+        childlink: "add-device",
+      }
+    ]
+  },
+  {
+    title: "Voitures",
+    icon: "ph:car",
+    link: "cars",
+    child: [
+      {
+        childtitle: "Liste des Voitures",
+        childlink: "cars-list",
+      },
+      {
+        childtitle: "Ajouter Voiture",
+        childlink: "add-car",
       }
     ]
   },
