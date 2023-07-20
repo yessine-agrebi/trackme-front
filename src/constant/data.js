@@ -10,18 +10,23 @@ export const menuItems = [
     link: "dashboard",
   },
   {
+    title: "Map",
+    icon: "heroicons-outline:map",
+    link: "markermap",
+  },
+  {
     title: "Clients",
     icon: "lucide:users",
-    link: "dashboard",
+   
     child: [
       {
         childtitle: "Liste des clients",
-        childlink: "users-list",
+        childlink: "listofusers",
         childicon: "la:users"
       },
       {
         childtitle: "Ajouter Client",
-        childlink: "add-user",
+        childlink: "addusers",
         childicon: "mdi:users-add-outline"
       }
     ]

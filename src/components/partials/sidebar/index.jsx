@@ -6,7 +6,7 @@ import SimpleBar from "simplebar-react";
 import useSidebar from "@/hooks/useSidebar";
 import useSemiDark from "@/hooks/useSemiDark";
 import useSkin from "@/hooks/useSkin";
-import svgRabitImage from "@/assets/images/svg/rabit.svg";
+
 
 const Sidebar = () => {
   const scrollableNodeRef = useRef();
