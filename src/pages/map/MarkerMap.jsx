@@ -20,8 +20,9 @@ const MarkerMap = () => {
 
   const getPosition = async () => {
     try {
-      const response = await Api.get("/locations");
-      setPositions(response.data[0].locations);
+      const response = await Api.get("/devices/5195374/position");
+      const location = response.data[0]
+        setPositions([location.latitude, location.longitude]);
     } catch (error) {
       console.error(error.message);
     }
@@ -29,10 +30,10 @@ const MarkerMap = () => {
 
   useEffect(() => {
     getPosition(); // Fetch initial positions
-    const interval = setInterval(getPosition, 3000);
-    return () => {
-      clearInterval(interval);
-    };
+    // const interval = setInterval(getPosition, 3000);
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   useEffect(() => {
@@ -59,10 +60,10 @@ const MarkerMap = () => {
     try {
       let filteredPositions = [];
       if (endDate) {
-        const response = await Api.get(`/locations/history/5195374/${startDate}/${endDate}`);
+        const response = await Api.get(`/history/5195374/${startDate}/${endDate}`);
         filteredPositions = response.data;
       } else {
-        const response = await Api.get(`/locations/history/5195374/${startDate}`);
+        const response = await Api.get(`/history/5195374/${startDate}`);
         filteredPositions = response.data;
       }
       
@@ -77,10 +78,10 @@ const MarkerMap = () => {
     try {
       let filteredPositions = [];
       if (endDate) {
-        const response = await Api.get(`/locations/history/5195374/${startDate}/${endDate}`);
+        const response = await Api.get(`/history/5195374/${startDate}/${endDate}`);
         filteredPositions = response.data;
       } else {
-        const response = await Api.get(`/locations/history/5195374/${startDate}`);
+        const response = await Api.get(`/history/5195374/${startDate}`);
         filteredPositions = response.data;
       }
       

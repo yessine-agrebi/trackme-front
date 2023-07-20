@@ -6,7 +6,7 @@ import { Button } from "reactstrap";
 
 const FlatpickerPage = ({ onDateRangeChange }) => {
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(null);
 
   const handleSearchButtonClick = () => {
     const formattedStartDate = startDate ? format(startDate, "dd-MM-yyyy") : null;
