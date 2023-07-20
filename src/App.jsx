@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 // home pages  & dashboard
 //import Dashboard from "./pages/dashboard";
 const Dashboard = lazy(() => import('./pages/dashboard'))
-
+const Login = lazy(() => import('./pages/auth/Login') )
 import Layout from './layout/Layout'
 import ListOfUser from './pages/users/ListOfUser'
 import AddUsers from './pages/users/AddUsers'
@@ -13,6 +13,7 @@ function App() {
   return (
     <main className="App  relative">
       <Routes>
+        <Route path='/login' element={<Login />} />
         <Route path="/*" element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="listofusers" element={<ListOfUser />} />
