@@ -92,13 +92,9 @@ const MarkerMap = () => {
   };
 
   return (
-    <div className="w-full h-[300px]">
+    <div className="w-full h-[400px]">
       <Button text="success" className=" btn-outline-success rounded-[999px] m-1" onClick={handlButtonClick}>Historique</Button>
       {isVisible && <FlatpickerPage onDateRangeChange={handleDateRangeChange} />}
-      
-
-     
-      
       <MapContainer
         center={initialPosition}
         zoom={10}

@@ -7,12 +7,12 @@ import { createUser } from "../../service/UserService";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 const defaultValues = {
-  name: '',
-  email: '',
-  phone: '',
-  role: '',
-  password:'',
-}
+  name: "",
+  email: "",
+  phone: "",
+  role: "",
+  password: "",
+};
 const FormValidationSchema = yup.object({
   password: yup.string().required("Password is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -22,6 +22,7 @@ const FormValidationSchema = yup.object({
 });
 
 const AddUsers = () => {
+  const navigate = useNavigate();
   const {
     control,
     register,
@@ -32,32 +33,17 @@ const AddUsers = () => {
     resolver: yupResolver(FormValidationSchema),
   });
 
-  const role = [
-    { name: "basic", label: "admin" },
-    { name: "subscriber", label: "client" },
+  const roleOptions = [
+    { value: "admin", label: "admin" },
+    { value: "revendeur", label: "revendeur" },
+    { value: "client", label: "client" },
   ];
 
   const onSubmit = async (data) => {
-   
-    try {
-      const newUser = await createUser({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        isAdmin: data.isAdmin,
-        phone: data.phone
-      });
-      
-      console.log('New user added:', newUser);
-     
-      //window.location.reload();
-    
-    } catch (error) {
-      console.log('Failed to add user:', error.message);
-    }
+    await createUser(data)
+      .then((response) => console.log(response))
+      .catch((error) => console.log("Failed to add user:", error.message));
   };
-
-  const navigate = useNavigate();
 
   return (
     <div>
@@ -81,7 +67,7 @@ const AddUsers = () => {
         <Textinput
           name="phone"
           label="Telephone"
-          type="number"
+          type="phone"
           register={register}
           error={errors.phone}
           msgTooltip
@@ -94,7 +80,7 @@ const AddUsers = () => {
           error={errors.password}
           msgTooltip
         />
-          <div className="mb-1">
+        <div className="mb-1">
           <label htmlFor="role" className="form-label">
             Role
           </label>
@@ -106,8 +92,9 @@ const AddUsers = () => {
                 {...field}
                 className="react-select"
                 classNamePrefix="select"
-                options={role}
-                onChange={(selectedOption) => field.onChange(selectedOption.name)}
+                options={roleOptions}
+                value={roleOptions.find((option) => option.value === field.value)}
+                onChange={(selectedOption) => field.onChange(selectedOption.value)}
                 id="role"
               />
             )}
@@ -116,10 +103,7 @@ const AddUsers = () => {
         </div>
 
         <div className="ltr:text-right rtl:text-left">
-          <button
-            className="btn btn-dark text-center"
-            type="submit"
-          >
+          <button className="btn btn-dark text-center" type="submit">
             Submit
           </button>
         </div>

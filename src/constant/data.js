@@ -31,6 +31,23 @@ export const menuItems = [
       }
     ]
   },
+  {
+    title: "Appareils",
+    icon: "lucide:cpu",
+   
+    child: [
+      {
+        childtitle: "Liste des Appareils",
+        childlink: "listofdevices",
+        childicon: "la:cpu"
+      },
+      {
+        childtitle: "Ajouter Appareil",
+        childlink: "adddevice",
+        childicon: "mdi:users-add-outline"
+      }
+    ]
+  },
 ];
 
 export const topMenu = [
