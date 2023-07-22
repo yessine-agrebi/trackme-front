@@ -44,7 +44,7 @@ export const menuItems = [
       {
         childtitle: "Ajouter Appareil",
         childlink: "adddevice",
-        childicon: "mdi:users-add-outline"
+        childicon: "mdi:cpu-add-outline"
       }
     ]
   },

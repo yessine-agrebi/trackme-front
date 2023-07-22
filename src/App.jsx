@@ -10,6 +10,7 @@ import ListOfUser from './pages/users/ListOfUser'
 import AddUsers from './pages/users/AddUsers'
 import MarkerMap from './pages/map/MarkerMap'
 import DevicesList from './pages/device/DevicesList'
+import AddDevice from './pages/device/AddDevice'
 function App() {
   return (
     <main className="App  relative">
@@ -21,6 +22,7 @@ function App() {
           <Route path="addusers" element={<AddUsers />} />
           <Route path="markermap" element={<MarkerMap />} />
           <Route path="listofdevices" element={<DevicesList />} />
+          <Route path="adddevice" element={<AddDevice />} />
           
           <Route path="*" element={<Navigate to="/404" />} />
         </Route>
