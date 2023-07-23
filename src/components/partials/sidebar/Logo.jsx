@@ -7,8 +7,8 @@ import useSemiDark from "@/hooks/useSemiDark";
 import useSkin from "@/hooks/useSkin";
 
 // import images
-import MobileLogo from "@/assets/images/logo/logogps.png";
-import MobileLogoWhite from "@/assets/images/logo/logogps.png";
+import MobileLogo from "@/assets/images/logo/logo-no-background.svg";
+import MobileLogoWhite from "@/assets/images/logo/logo-no-background.svg";
 
 const SidebarLogo = ({ menuHover }) => {
   const [isDark] = useDarkMode();

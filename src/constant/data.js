@@ -66,27 +66,6 @@ export const notifications = [
     image: User1,
     link: "#",
   },
-  {
-    title: "Congratulations Darlene  🎉",
-    desc: "Won the monthly best seller badge",
-    unread: true,
-    image: User2,
-    link: "#",
-  },
-  {
-    title: "Revised Order 👋",
-    desc: "Won the monthly best seller badge",
-
-    image: User3,
-    link: "#",
-  },
-  {
-    title: "Brooklyn Simmons",
-    desc: "Added you to Top Secret Project group...",
-
-    image: User4,
-    link: "#",
-  },
 ];
 
 export const message = [

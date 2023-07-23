@@ -3,17 +3,16 @@ import Textinput from "@/components/ui/Textinput";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { createUser, getUsers } from "../../service/UserService";
+import { getUsers } from "../../service/UserService";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import { createDevice } from "../../service/DeviceService";
 const defaultValues = {
   name: "",
   device_type_id: "",
-  configuration: {
-    ident: "",
-    phone: "",
-    settings_polling: "once",
-  },
+  ident: "",
+  phone: "",
+  settings_polling: "once",
   messages_ttl: 1,
   messages_rotate: 0,
   user: "",
@@ -31,7 +30,7 @@ const FormValidationSchema = yup.object({
 
 const AddDevice = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const {
     control,
     register,
@@ -44,19 +43,37 @@ const AddDevice = () => {
 
   useEffect(() => {
     getUsers()
-    .then(data => {
-      setUsers(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  }, [])
+      .then((data) => {
+        setUsers(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-  const usersOptions = users?.map((user) => ({value: user._id, label: user.name}))
-  console.log(usersOptions);
+  const usersOptions = users?.map((user) => ({
+    value: user._id,
+    label: user.name,
+  }));
 
   const onSubmit = async (data) => {
-    console.log("data:", data);
+    const deviceData = [
+      {
+        name: data.name,
+        device_type_id: data.device_type_id,
+        configuration: {
+          ident: data.ident,
+          phone: data.phone,
+          settings_polling: data.settings_polling,
+        },
+        messages_ttl: data.messages_ttl,
+        messages_rotate: data.messages_rotate,
+        user: data.user,
+      },
+    ];
+    createDevice(deviceData)
+      .then((res) => console.log(res))
+      .catch((error) => console.error(error.message));
   };
 
   return (
