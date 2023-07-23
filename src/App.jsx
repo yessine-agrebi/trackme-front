@@ -16,7 +16,7 @@ function App() {
     <main className="App  relative">
       <Routes>
         <Route path='/login' element={<Login />} />
-        <Route path="/*" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="listofusers" element={<ListOfUser />} />
           <Route path="addusers" element={<AddUsers />} />

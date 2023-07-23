@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Checkbox from "@/components/ui/Checkbox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Login } from "../../service/AuthServie";
 
 const schema = yup
   .object({
@@ -13,6 +14,7 @@ const schema = yup
   })
   .required();
 const LoginForm = () => {
+  const navigate = useNavigate()
   const {
     register,
     formState: { errors },
@@ -22,8 +24,13 @@ const LoginForm = () => {
     //
     mode: "all",
   });
-  const onSubmit = (data) => {
-   
+  const onSubmit = async(data) => {
+   await Login(data)
+   .then((res) => {
+    localStorage.setItem("userData", JSON.stringify(res.data));
+    navigate('/')
+   })
+   .catch((error) => console.log("error", error) )
   };
 
   const [checked, setChecked] = useState(false);

@@ -49,6 +49,22 @@ export const menuItems = [
     ]
   },
 ];
+export const clientItems = [
+  {
+    isHeadr: true,
+    title: "menu",
+  },
+  {
+    title: "Dashboard",
+    icon: "heroicons-outline:home",
+    link: "dashboard",
+  },
+  {
+    title: "Map",
+    icon: "heroicons-outline:map",
+    link: "markermap",
+  },
+]
 
 export const topMenu = [
  

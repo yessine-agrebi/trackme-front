@@ -4,8 +4,8 @@ import { ToastContainer } from "react-toastify";
 import useDarkMode from "@/hooks/useDarkMode";
 // image import
 import bgImage from "@/assets/images/all-img/page-bg.png";
-import LogoWhite from "@/assets/images/logo/logo-white.svg";
-import Logo from "@/assets/images/logo/logo.svg";
+import LogoWhite from "@/assets/images/logo/logo-no-background.svg";
+import Logo from "@/assets/images/logo/logo-no-background.svg";
 import LoginForm from "../common/login-form";
 const Login = () => {
   const [isDark] = useDarkMode();
@@ -40,7 +40,7 @@ const Login = () => {
               <div className="text-center 2xl:mb-10 mb-5">
                 <h4 className="font-medium">Sign In</h4>
                 <div className="text-slate-500 dark:text-slate-400 text-base">
-                  Sign in to your account to start using Dashcode
+                  Sign in to your account to start using Track Me
                 </div>
               </div>
               <LoginForm />
@@ -56,9 +56,7 @@ const Login = () => {
               </div>
             </div>
           </div>
-          <div className="auth-footer3 text-white py-5 px-5 text-xl w-full">
-            Unlock your Project performance
-          </div>
+          
         </div>
       </div>
     </>
