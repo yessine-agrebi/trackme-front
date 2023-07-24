@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, NavLink } from "react-router-dom";
-import { menuItems } from "@/constant/data";
+import { adminItems } from "@/constant/data";
 import Icon from "@/components/ui/Icon";
 
 const Breadcrumbs = () => {
@@ -11,11 +11,11 @@ const Breadcrumbs = () => {
   const [groupTitle, setGroupTitle] = useState("");
 
   useEffect(() => {
-    const currentMenuItem = menuItems.find(
+    const currentMenuItem = adminItems.find(
       (item) => item.link === locationName
     );
 
-    const currentChild = menuItems.find((item) =>
+    const currentChild = adminItems.find((item) =>
       item.child?.find((child) => child.childlink === locationName)
     );
 

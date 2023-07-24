@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import Navmenu from "./Navmenu";
-import { menuItems } from "@/constant/data";
+import { adminItems, clientItems } from "../../../constant/data";
 import SimpleBar from "simplebar-react";
 import useSemiDark from "@/hooks/useSemiDark";
 import useSkin from "@/hooks/useSkin";
@@ -34,6 +34,9 @@ const MobileMenu = ({ className = "custom-class" }) => {
   const [skin] = useSkin();
   const [isDark] = useDarkMode();
   const [mobileMenu, setMobileMenu] = useMobileMenu();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userRole = userData ? userData.role : null;
+  const menuItems = userRole === "admin" ? adminItems : clientItems;
   return (
     <div
       className={`${className} fixed  top-0 bg-white dark:bg-slate-800 shadow-lg  h-full   w-[248px]`}

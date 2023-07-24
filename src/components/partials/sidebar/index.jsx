@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import SidebarLogo from "./Logo";
 import Navmenu from "./Navmenu";
-import { menuItems } from "@/constant/data";
 import SimpleBar from "simplebar-react";
 import useSidebar from "@/hooks/useSidebar";
 import useSemiDark from "@/hooks/useSemiDark";
 import useSkin from "@/hooks/useSkin";
+import { adminItems, clientItems } from "../../../constant/data";
 
 
 const Sidebar = () => {
@@ -30,6 +30,14 @@ const Sidebar = () => {
   const [isSemiDark] = useSemiDark();
   // skin
   const [skin] = useSkin();
+
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userRole = userData ? userData.role : null;
+
+  console.log(userData, userRole);
+
+  // Determine the appropriate menu items based on the user role
+  const menuItems = userRole === "admin" ? adminItems : clientItems;
   return (
     <div className={isSemiDark ? "dark" : ""}>
       <div

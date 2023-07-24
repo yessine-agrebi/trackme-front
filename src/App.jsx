@@ -11,18 +11,19 @@ import AddUsers from './pages/users/AddUsers'
 import MarkerMap from './pages/map/MarkerMap'
 import DevicesList from './pages/device/DevicesList'
 import AddDevice from './pages/device/AddDevice'
+import { ProtectedRoute } from './utils/ProtectedRoutes'
 function App() {
   return (
     <main className="App  relative">
       <Routes>
         <Route path='/login' element={<Login />} />
-        <Route path="/" element={<Layout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="listofusers" element={<ListOfUser />} />
-          <Route path="addusers" element={<AddUsers />} />
-          <Route path="markermap" element={<MarkerMap />} />
-          <Route path="listofdevices" element={<DevicesList />} />
-          <Route path="adddevice" element={<AddDevice />} />
+        <Route path="/" element={<ProtectedRoute element={<Layout />} />} >
+          <Route path="dashboard" element={<ProtectedRoute element={<Dashboard />} />}  />
+          <Route path="listofusers" element={<ProtectedRoute element={<ListOfUser />} />}  />
+          <Route path="addusers" element={<ProtectedRoute element={<AddUsers />} />}  />
+          <Route path="markermap" element={<ProtectedRoute element={<MarkerMap />} />}  />
+          <Route path="listofdevices" element={<ProtectedRoute element={<DevicesList />} />}  />
+          <Route path="adddevice" element={<ProtectedRoute element={<AddDevice />} />}  />
           
           <Route path="*" element={<Navigate to="/404" />} />
         </Route>

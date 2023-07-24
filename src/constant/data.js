@@ -1,4 +1,4 @@
-export const menuItems = [
+export const adminItems = [
   {
     isHeadr: true,
     title: "menu",
