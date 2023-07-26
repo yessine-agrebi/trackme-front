@@ -5,6 +5,7 @@ import FlatpickerPage from "./FlatpickerPage";
 import { Button, Card } from "reactstrap";
 import { getPosition, getStatus } from "../../service/DeviceService";
 import Statustable from "../../utils/Statustable";
+import socketIO from 'socket.io-client';
 
 const MarkerMap = () => {
   const [initialPosition, setInitialPosition] = useState([
@@ -23,6 +24,11 @@ const MarkerMap = () => {
   };
 
   useEffect(() => {
+    const socket = socketIO('http://localhost:3001');
+    // Listen for 'positionUpdate' event from the server
+    socket.on('positionUpdate', (data) => {
+      setPositions([data.latitude, data.longitude]);
+    });
     getPosition()
       .then((response) => setPositions([response.latitude, response.longitude]))
       .catch((error) => console.error(error.message));
@@ -35,7 +41,6 @@ const MarkerMap = () => {
     //   clearInterval(interval);
     // };
   }, []);
-  console.log(status);
   useEffect(() => {
     if (coordinates.length > 0 && markerRef.current) {
       const lastPosition = coordinates[coordinates.length - 1];
