@@ -35,11 +35,6 @@ const MarkerMap = () => {
     getStatus()
       .then((response) => setStatus(response))
       .catch((error) => console.error(error.message));
-    // Fetch initial positions
-    // const interval = setInterval(getPosition, 3000);
-    // return () => {
-    //   clearInterval(interval);
-    // };
   }, []);
   useEffect(() => {
     if (coordinates.length > 0 && markerRef.current) {
