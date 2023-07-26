@@ -5,7 +5,7 @@ import FlatpickerPage from "./FlatpickerPage";
 import { Button, Card } from "reactstrap";
 import { getPosition, getStatus } from "../../service/DeviceService";
 import Statustable from "../../utils/Statustable";
-import socketIO from 'socket.io-client';
+import socketIO from "socket.io-client";
 
 const MarkerMap = () => {
   const [initialPosition, setInitialPosition] = useState([
@@ -23,25 +23,26 @@ const MarkerMap = () => {
     }, 500);
   };
 
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const deviceId = userData.devices;
   useEffect(() => {
-    const socket = socketIO('http://localhost:3001');
+    const socket = socketIO("http://localhost:3001");
     // Listen for 'positionUpdate' event from the server
-    socket.on('positionUpdate', (data) => {
+    socket.on("positionUpdate", (data) => {
+      console.log(data);
       setPositions([data.latitude, data.longitude]);
     });
-    getPosition()
-      .then((response) => setPositions([response.latitude, response.longitude]))
-      .catch((error) => console.error(error.message));
+    socket.emit("getInitialPosition", deviceId);
     getStatus()
       .then((response) => setStatus(response))
       .catch((error) => console.error(error.message));
   }, []);
   useEffect(() => {
-    if (coordinates.length > 0 && markerRef.current) {
-      const lastPosition = coordinates[coordinates.length - 1];
-      markerRef.current.setLatLng(lastPosition);
+    if (positions.length > 0 && markerRef.current) {
+      console.log(positions);
+      markerRef.current.setLatLng(positions);
     }
-  }, []);
+  }, [positions]);
 
   useEffect(() => {
     if (historyPositions.length > 0) {
@@ -82,44 +83,46 @@ const MarkerMap = () => {
   };
 
   return (
-      <div className="w-full h-[400px]">
-        <Button
-          text="success"
-          className=" btn-outline-success rounded-[999px] m-1"
-          onClick={handlButtonClick}
-        >
-          Historique
-        </Button>
-        {isVisible && (
-          <FlatpickerPage onDateRangeChange={handleDateRangeChange} />
-        )}
-        <MapContainer
-          center={initialPosition}
-          zoom={10}
-          maxZoom={18}
-          minZoom={3}
-          scrollWheelZoom={false}
-          style={{ height: "100%", width: "100%" }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+    <div className="w-full h-[400px]">
+      <Button
+        text="success"
+        className=" btn-outline-success rounded-[999px] m-1"
+        onClick={handlButtonClick}
+      >
+        Historique
+      </Button>
+      {isVisible && (
+        <FlatpickerPage onDateRangeChange={handleDateRangeChange} />
+      )}
+      <MapContainer
+        center={
+          positions.length > 0
+            ? positions[positions.length - 1]
+            : initialPosition
+        }
+        zoom={10}
+        maxZoom={18}
+        minZoom={3}
+        scrollWheelZoom={false}
+        style={{ height: "100%", width: "100%" }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {positions.length > 0 && (
           <Marker
             ref={markerRef}
-            position={initialPosition}
+            position={positions}
             interactive={false}
           />
-          {polylineCoord.length > 0 && (
-            <Polyline
-              positions={polylineCoord}
-              color="red"
-              smoothFactor={0.5}
-            />
-          )}
-        </MapContainer>
-        <Statustable status={status} />
-      </div>
+        )}
+        {polylineCoord.length > 0 && (
+          <Polyline positions={polylineCoord} color="red" smoothFactor={0.5} />
+        )}
+      </MapContainer>
+      <Statustable status={status} />
+    </div>
   );
 };
 
