@@ -12,6 +12,8 @@ import MarkerMap from './pages/map/MarkerMap'
 import DevicesList from './pages/device/DevicesList'
 import AddDevice from './pages/device/AddDevice'
 import { ProtectedRoute } from './utils/ProtectedRoutes'
+import CarsList from './pages/car/CarsList'
+import AddCar from './pages/car/AddCar'
 function App() {
   return (
     <main className="App  relative">
@@ -24,6 +26,8 @@ function App() {
           <Route path="markermap" element={<ProtectedRoute element={<MarkerMap />} />}  />
           <Route path="listofdevices" element={<ProtectedRoute element={<DevicesList />} />}  />
           <Route path="adddevice" element={<ProtectedRoute element={<AddDevice />} />}  />
+          <Route path="listofcars" element={<ProtectedRoute element={<CarsList />} />}  />
+          <Route path="addcar" element={<ProtectedRoute element={<AddCar />} />}  />
           
           <Route path="*" element={<Navigate to="/404" />} />
         </Route>

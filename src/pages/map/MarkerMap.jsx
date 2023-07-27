@@ -25,21 +25,45 @@ const MarkerMap = () => {
 
   const userData = JSON.parse(localStorage.getItem("userData"));
   const deviceId = userData.devices;
+  // useEffect(() => {
+  //   // Listen for 'positionUpdate' event from the server
+  //   socket.on("positionUpdate", (data) => {
+  //     console.log('data', data);
+  //     setPositions([data.latitude, data.longitude]);
+  //   });
+  //   socket.emit("getInitialPosition", deviceId);
+  //   getStatus()
+  //     .then((response) => setStatus(response))
+  //     .catch((error) => console.error(error.message));
+  // }, [socket]);
+
+  const socketRef = useRef(null);
+
   useEffect(() => {
     const socket = socketIO("http://localhost:3001");
+
     // Listen for 'positionUpdate' event from the server
-    socket.on("positionUpdate", (data) => {
+    const handlePositionUpdate = (data) => {
       console.log(data);
       setPositions([data.latitude, data.longitude]);
-    });
+    };
+
+    socket.on("positionUpdate", handlePositionUpdate);
     socket.emit("getInitialPosition", deviceId);
+
     getStatus()
       .then((response) => setStatus(response))
       .catch((error) => console.error(error.message));
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      socket.off("positionUpdate", handlePositionUpdate);
+      socket.disconnect();
+    };
   }, []);
+
   useEffect(() => {
     if (positions.length > 0 && markerRef.current) {
-      console.log(positions);
       markerRef.current.setLatLng(positions);
     }
   }, [positions]);

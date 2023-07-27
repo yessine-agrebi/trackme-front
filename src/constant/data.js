@@ -48,6 +48,21 @@ export const adminItems = [
       }
     ]
   },
+  {
+    title: "Voitures",
+    icon: "lucide:car",
+   
+    child: [
+      {
+        childtitle: "Liste des Voitures",
+        childlink: "listofcars",
+      },
+      {
+        childtitle: "Ajouter Voiture",
+        childlink: "addcar",
+      }
+    ]
+  },
 ];
 export const clientItems = [
   {
