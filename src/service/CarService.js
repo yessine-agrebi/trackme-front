@@ -11,6 +11,15 @@ const getCars = async () => {
   }
 };
 
+const getOnecar = async (carId) => {
+    try {
+      const response = await Api.get(`${API_URL}/${carId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Failed to fetch the car');
+    }
+  };
+
 
 const createCar = async (carData) => {
   try {
@@ -38,4 +47,4 @@ const deleteCar = async (carId) => {
   }
 };
 
-export { getCars, updateCar, deleteCar, createCar };
+export { getCars, updateCar, deleteCar, createCar, getOnecar };
