@@ -135,11 +135,7 @@ const MarkerMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {positions.length > 0 && (
-          <Marker
-            ref={markerRef}
-            position={positions}
-            interactive={false}
-          />
+          <Marker ref={markerRef} position={positions} interactive={false} />
         )}
         {polylineCoord.length > 0 && (
           <Polyline positions={polylineCoord} color="red" smoothFactor={0.5} />

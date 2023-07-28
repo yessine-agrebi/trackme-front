@@ -23,8 +23,8 @@ const FormValidationSchema = yup.object({
 
 const AddCar = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([])
-  const [devices, setDevices] = useState([])
+  const [users, setUsers] = useState([]);
+  const [devices, setDevices] = useState([]);
   const {
     control,
     register,
@@ -36,9 +36,13 @@ const AddCar = () => {
   });
 
   useEffect(() => {
-    getUsers().then((res) => setUsers(res)).catch((error) => console.error(error.message));
-    getDevices().then((res) => setDevices(res)).catch((error) => console.error(error.message));
-  }, [])
+    getUsers()
+      .then((res) => setUsers(res))
+      .catch((error) => console.error(error.message));
+    getDevices()
+      .then((res) => setDevices(res))
+      .catch((error) => console.error(error.message));
+  }, []);
 
   const usersOptions = users?.map((user) => ({
     value: user._id,
