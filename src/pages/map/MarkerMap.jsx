@@ -33,9 +33,8 @@ const MarkerMap = () => {
     const handlePositionUpdate = (data) => {
       setPositions([data.latitude, data.longitude]);
     };
-
-    socket.on("positionUpdate", handlePositionUpdate);
     socket.emit("getInitialPosition", deviceId);
+    socket.on("positionUpdate", handlePositionUpdate);
 
     getStatus()
       .then((response) => setStatus(response))
@@ -120,8 +119,8 @@ const MarkerMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {coordinates.length > 0 && (
-          <Marker ref={markerRef} position={coordinates} interactive={false} />
+        {positions.length > 0 && (
+          <Marker ref={markerRef} position={positions} interactive={false} />
         )}
         {polylineCoord.length > 0 && (
           <Polyline positions={polylineCoord} color="red" smoothFactor={0.5} />
