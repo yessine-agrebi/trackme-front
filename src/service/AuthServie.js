@@ -12,5 +12,19 @@ const Login = async (data) => {
     }
 };
 
+const Logout = async () => {
+  try {
+    // Make a POST request to the logout API
+    const response = await Api.post('/auth/logout');
+    
+    // Clear the token from localStorage
+    localStorage.removeItem("token");
+    
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
-export {Login}
+
+export {Login, Logout}

@@ -4,8 +4,8 @@ import Icon from "@/components/ui/Icon";
 import { Menu, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import UserAvatar from "@/assets/images/all-img/user.png";
+import { Logout } from "../../../../service/AuthServie";
 
 const profileLabel = () => {
   const userData = JSON.parse(localStorage.getItem("userData"))
@@ -57,8 +57,15 @@ const Profile = () => {
     {
       label: "Logout",
       icon: "heroicons-outline:login",
-      action: () => {
-        console.log("logout");
+      action: async (history) => {
+        try {
+          await Logout();
+          // Redirect to the "/login" page after successful logout
+          navigate('/login')
+          console.log("Successfully logged out!");
+        } catch (error) {
+          console.error("Error during logout:", error.message);
+        }
       },
     },
   ];
