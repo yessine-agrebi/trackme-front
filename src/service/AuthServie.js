@@ -19,6 +19,7 @@ const Logout = async () => {
     
     // Clear the token from localStorage
     localStorage.removeItem("token");
+    localStorage.removeItem("userData");
     
     return response.data;
   } catch (error) {
