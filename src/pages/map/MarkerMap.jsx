@@ -25,26 +25,12 @@ const MarkerMap = () => {
 
   const userData = JSON.parse(localStorage.getItem("userData"));
   const deviceId = userData.devices;
-  // useEffect(() => {
-  //   // Listen for 'positionUpdate' event from the server
-  //   socket.on("positionUpdate", (data) => {
-  //     console.log('data', data);
-  //     setPositions([data.latitude, data.longitude]);
-  //   });
-  //   socket.emit("getInitialPosition", deviceId);
-  //   getStatus()
-  //     .then((response) => setStatus(response))
-  //     .catch((error) => console.error(error.message));
-  // }, [socket]);
-
-  const socketRef = useRef(null);
 
   useEffect(() => {
     const socket = socketIO("http://localhost:3001");
 
     // Listen for 'positionUpdate' event from the server
     const handlePositionUpdate = (data) => {
-      console.log(data);
       setPositions([data.latitude, data.longitude]);
     };
 
@@ -92,11 +78,11 @@ const MarkerMap = () => {
       let filteredPositions = [];
       if (endDate) {
         const response = await Api.get(
-          `/history/5195374/${startDate}/${endDate}`
+          `/history/${deviceId}/${startDate}/${endDate}`
         );
         filteredPositions = response.data;
       } else {
-        const response = await Api.get(`/history/5195374/${startDate}`);
+        const response = await Api.get(`/history/${deviceId}/${startDate}`);
         filteredPositions = response.data;
       }
 
@@ -120,8 +106,8 @@ const MarkerMap = () => {
       )}
       <MapContainer
         center={
-          positions.length > 0
-            ? positions[positions.length - 1]
+          coordinates.length > 0
+            ? coordinates[coordinates.length - 1]
             : initialPosition
         }
         zoom={10}
@@ -134,8 +120,8 @@ const MarkerMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {positions.length > 0 && (
-          <Marker ref={markerRef} position={positions} interactive={false} />
+        {coordinates.length > 0 && (
+          <Marker ref={markerRef} position={coordinates} interactive={false} />
         )}
         {polylineCoord.length > 0 && (
           <Polyline positions={polylineCoord} color="red" smoothFactor={0.5} />
