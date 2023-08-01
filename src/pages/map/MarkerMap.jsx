@@ -27,7 +27,7 @@ const MarkerMap = () => {
   const deviceId = userData.devices;
 
   useEffect(() => {
-    const socket = socketIO("http://localhost:3001");
+    const socket = socketIO(import.meta.env.VITE_URL);
 
     // Listen for 'positionUpdate' event from the server
     const handlePositionUpdate = (data) => {
