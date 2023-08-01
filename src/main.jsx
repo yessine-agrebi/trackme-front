@@ -9,7 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import store from "./store";
 import "react-toastify/dist/ReactToastify.css";
+import {disableReactDevtools} from "@fvilers/disable-react-devtools"
 
+if(import.meta.env.VITE_NODE_ENV === 'production') disableReactDevtools()
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
