@@ -14,6 +14,7 @@ const AddDevice = lazy(() => import("./pages/device/AddDevice"));
 const CarsList = lazy(() => import("./pages/car/CarsList"));
 const AddCar = lazy(() => import("./pages/car/AddCar"));
 import { ProtectedRoute } from "./utils/ProtectedRoutes";
+import Error from "./pages/404";
 
 function App() {
   return (
@@ -53,8 +54,9 @@ function App() {
             path="addcar"
             element={<ProtectedRoute element={<AddCar />} />}
           />
-
+          <Route path="/404" element={<Error />} />
           <Route path="*" element={<Navigate to="/404" />} />
+          
         </Route>
       </Routes>
     </main>
