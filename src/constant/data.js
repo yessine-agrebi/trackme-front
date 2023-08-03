@@ -5,12 +5,12 @@ export const adminItems = [
   },
 
   {
-    title: "Dashboard",
+    title: "Accueil",
     icon: "heroicons-outline:home",
     link: "dashboard",
   },
   {
-    title: "Map",
+    title: "Carte",
     icon: "heroicons-outline:map",
     link: "markermap",
   },
