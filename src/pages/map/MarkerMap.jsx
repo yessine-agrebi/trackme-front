@@ -31,8 +31,32 @@ const MarkerMap = () => {
 
     // Listen for 'positionUpdate' event from the server
     const handlePositionUpdate = (data) => {
-      setPositions([data.latitude, data.longitude]);
+      // Find the index of the position in the positions array based on the device ID
+      const deviceIndex = positions.findIndex(
+        (pos) => pos.deviceId === data.id
+      );
+
+      // Update the position or add a new position if not found
+      if (deviceIndex !== -1) {
+        const updatedPositions = [...positions];
+        updatedPositions[deviceIndex] = {
+          deviceId: data.id,
+          latitude: data.latitude,
+          longitude: data.longitude,
+        };
+        setPositions(updatedPositions);
+      } else {
+        setPositions((prevPositions) => [
+          ...prevPositions,
+          {
+            deviceId: data.id,
+            latitude: data.latitude,
+            longitude: data.longitude,
+          },
+        ]);
+      }
     };
+
     socket.emit("getInitialPosition", deviceId);
     socket.on("positionUpdate", handlePositionUpdate);
 
@@ -48,9 +72,19 @@ const MarkerMap = () => {
   }, []);
 
   useEffect(() => {
-    if (positions.length > 0 && markerRef.current) {
-      markerRef.current.setLatLng(positions);
-    }
+    // Update marker positions for all devices
+    positions.forEach((pos) => {
+      if (
+        pos.latitude !== null &&
+        pos.longitude !== null &&
+        markerRef.current[pos.deviceId]
+      ) {
+        markerRef.current[pos.deviceId].setLatLng([
+          pos.latitude,
+          pos.longitude,
+        ]);
+      }
+    });
   }, [positions]);
 
   useEffect(() => {
@@ -119,8 +153,18 @@ const MarkerMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {positions.length > 0 && (
-          <Marker ref={markerRef} position={positions} interactive={false} />
+        {/* Loop through positions and create markers for each device */}
+        {positions.map(
+          (pos, index) =>
+            pos.latitude !== null &&
+            pos.longitude !== null && (
+              <Marker
+                key={index}
+                ref={markerRef}
+                position={[pos.latitude, pos.longitude]}
+                interactive={false}
+              />
+            )
         )}
         {polylineCoord.length > 0 && (
           <Polyline positions={polylineCoord} color="red" smoothFactor={0.5} />
