@@ -25,6 +25,32 @@ const MarkerMap = () => {
 
   const userData = JSON.parse(localStorage.getItem("userData"));
   const deviceId = userData.devices;
+  // const deviceIdList = userData?.cars?.map((car) => car.device_id) || [];
+  // const CarsAndDeviceStatus = async() => {
+  //   try {
+  //     const statusPromises = deviceIdList.map((deviceId) =>
+  //       getStatus(deviceId)
+  //         .then((response) => response)
+  //         .catch((error) => console.error(error.message))
+  //     );
+  //     const allStatus = await Promise.all(statusPromises);
+
+  //     // Combine car data and status data
+  //     const combinedData = userData?.cars?.map((car, index) => ({
+  //       carModel: car.model,
+  //       carNumSerie: car.num_serie,
+  //       batteryLevel: allStatus[index]?.telemetry?.["battery.level"]?.value,
+  //       defenseActiveStatus: allStatus[index]?.telemetry?.["defense.active.status"]?.value,
+  //       gsmSignalLevel: allStatus[index]?.telemetry?.["gsm.signal.level"]?.value,
+  //       // Add other properties from the status object as needed
+  //     }));
+
+  //     console.log(combinedData);
+  //     setStatus(combinedData);
+  //   } catch (error) {
+  //     console.error("Failed to fetch car status:", error.message);
+  //   }
+  // }
 
   useEffect(() => {
     const socket = socketIO(import.meta.env.VITE_URL);
@@ -60,10 +86,7 @@ const MarkerMap = () => {
     socket.emit("getInitialPosition", deviceId);
     socket.on("positionUpdate", handlePositionUpdate);
 
-    getStatus()
-      .then((response) => setStatus(response))
-      .catch((error) => console.error(error.message));
-
+    // CarsAndDeviceStatus()
     // Clean up the event listener when the component unmounts
     return () => {
       socket.off("positionUpdate", handlePositionUpdate);
@@ -170,7 +193,7 @@ const MarkerMap = () => {
           <Polyline positions={polylineCoord} color="red" smoothFactor={0.5} />
         )}
       </MapContainer>
-      <Statustable status={status} />
+      {/* <Statustable status={status} /> */}
     </div>
   );
 };
