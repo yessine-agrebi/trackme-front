@@ -118,8 +118,8 @@ const Header = ({ className = "custom-class" }) => {
           <div className="nav-tools flex items-center lg:space-x-6 space-x-3 rtl:space-x-reverse">
             <SwitchDark />
             <MonoChrome />
-            {width <= breakpoints.md && <Notification />}
-            {width <= breakpoints.md && <Profile />}
+            <Notification />
+            <Profile />
             {width <= breakpoints.md && (
               <div
                 className="cursor-pointer text-slate-900 dark:text-white text-2xl"

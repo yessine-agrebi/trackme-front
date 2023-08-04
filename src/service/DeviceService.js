@@ -11,18 +11,18 @@ const getDevices = async () => {
   }
 };
 
-const getPosition = async () => {
+const getPosition = async (id) => {
   try {
-    const response = await Api.get(`${API_URL}/5195374/position`);
+    const response = await Api.get(`${API_URL}/${id}/position`);
     const location = response.data[0];
     return location
   } catch (error) {
     console.error(error.message);
   }
 };
-const getStatus = async () => {
+const getStatus = async (id) => {
   try {
-    const response = await Api.get(`${API_URL}/5195374/status`);
+    const response = await Api.get(`${API_URL}/${id}/status`);
     const status = response.data;
     return status
   } catch (error) {
