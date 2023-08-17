@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { createUser } from "../../service/UserService";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+ //import { useHistory } from 'react-router-dom';
 const defaultValues = {
   name: "",
   email: "",
@@ -39,11 +40,22 @@ const AddUsers = () => {
     { value: "client", label: "client" },
   ];
 
+  // const onSubmit = async (data) => {
+  //   await createUser(data)
+  //     .then((response) => console.log(response))
+  //     .catch((error) => console.log("Failed to add user:", error.message));
+  // };
   const onSubmit = async (data) => {
-    await createUser(data)
-      .then((response) => console.log(response))
-      .catch((error) => console.log("Failed to add user:", error.message));
+    try {
+      const response = await createUser(data);
+      console.log(response);
+      // Naviguer vers une autre route après avoir ajouté l'utilisateur
+      navigate('/listofusers'); // Assurez-vous d'importer 'navigate' depuis 'react-router-dom'
+    } catch (error) {
+      console.log("Échec de l'ajout de l'utilisateur:", error.message);
+    }
   };
+  
 
   return (
     <div>

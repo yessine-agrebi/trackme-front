@@ -54,10 +54,14 @@ const AddCar = () => {
   }));
 
   const onSubmit = async (data) => {
-    await createCar(data)
-      .then((response) => console.log(response))
-      .catch((error) => console.log("Failed to add user:", error.message));
+    try {
+      await createCar(data);
+      navigate('/listofcars'); 
+    } catch (error) {
+      console.log("Failed to add user:", error.message);
+    }
   };
+  
 
   return (
     <div>
