@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
+import Leaflet from 'leaflet'
 import Api from "../../axios/Api";
 import FlatpickerPage from "./FlatpickerPage";
 import { Button, Card } from "reactstrap";
 import { getPosition, getStatus } from "../../service/DeviceService";
 import Statustable from "../../utils/Statustable";
 import socketIO from "socket.io-client";
+import iconMarker from "../../assets/images/svg/car-side.svg"
 
+export const newicon = new Leaflet.Icon({
+  iconUrl: iconMarker,
+  iconAnchor: [5, 55],
+  popupAnchor: [10, -44],
+  iconSize: [25, 55],
+})
 const MarkerMap = () => {
   const [initialPosition, setInitialPosition] = useState([
     34.754684, 10.755748,
@@ -166,7 +174,7 @@ const MarkerMap = () => {
             ? coordinates[coordinates.length - 1]
             : initialPosition
         }
-        zoom={10}
+        zoom={7}
         maxZoom={18}
         minZoom={3}
         scrollWheelZoom={false}
@@ -186,6 +194,7 @@ const MarkerMap = () => {
                 ref={markerRef}
                 position={[pos.latitude, pos.longitude]}
                 interactive={false}
+                icon={newicon}
               />
             )
         )}
