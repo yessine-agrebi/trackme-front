@@ -32,7 +32,7 @@ const createCar = async (carData) => {
 
 const updateCar = async (carId, carData) => {
   try {
-    const response = await Api.patch(`${API_URL}/${carId}`, carData);
+    const response = await Api.put(`${API_URL}/${carId}`, carData);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to update Car');
@@ -46,5 +46,7 @@ const deleteCar = async (carId) => {
     throw new Error(error.response?.data?.message || 'Failed to delete Car');
   }
 };
+
+
 
 export { getCars, updateCar, deleteCar, createCar, getOnecar };
