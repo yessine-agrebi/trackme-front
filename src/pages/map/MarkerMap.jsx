@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Polyline,
+  Popup,
+} from "react-leaflet";
 import Api from "../../axios/Api";
 import FlatpickerPage from "./FlatpickerPage";
 import { Button, Card } from "reactstrap";
@@ -70,13 +76,21 @@ const MarkerMap = () => {
           // If deviceId not found, add a new entry to the positions array
           return [
             ...prevPositions,
-            { deviceId: data.id, latitude: data.latitude, longitude: data.longitude },
+            {
+              deviceId: data.id,
+              latitude: data.latitude,
+              longitude: data.longitude,
+            },
           ];
         } else {
           // If deviceId found, update the latitude and longitude of the existing entry
           const updatedPositions = prevPositions.map((device, index) =>
             index === existingPositionIndex
-              ? { ...device, latitude: data.latitude, longitude: data.longitude }
+              ? {
+                  ...device,
+                  latitude: data.latitude,
+                  longitude: data.longitude,
+                }
               : device
           );
           return updatedPositions;
@@ -92,7 +106,7 @@ const MarkerMap = () => {
       socket.disconnect();
     };
   }, []);
-  console.log('positions', positions);
+  console.log("positions", positions);
 
   useEffect(() => {
     // Update marker positions for all devices
@@ -110,7 +124,6 @@ const MarkerMap = () => {
       }
     });
   }, [positions]);
-  
 
   useEffect(() => {
     if (historyPositions.length > 0) {
@@ -182,7 +195,7 @@ const MarkerMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {/* Loop through positions and create markers for each device */}
-        {positions.map(
+        {positions?.map(
           (pos, index) =>
             pos.latitude !== null &&
             pos.longitude !== null && (
@@ -191,7 +204,11 @@ const MarkerMap = () => {
                 ref={markerRef}
                 position={[pos.latitude, pos.longitude]}
                 interactive={false}
-              />
+              >
+                <Popup>
+                  A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+              </Marker>
             )
         )}
         {polylineCoord.length > 0 && startDate !== null && (
