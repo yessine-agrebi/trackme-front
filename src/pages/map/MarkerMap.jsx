@@ -17,9 +17,7 @@ const MarkerMap = () => {
   const [initialPosition, setInitialPosition] = useState([
     34.754684, 10.755748,
   ]);
-  const [positions, setPositions] = useState([
-    { deviceId: 756896, latitude: 34.74056, longitude: 10.76028 },
-  ]);
+  const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState([]);
   const [historyPositions, setHistoryPositions] = useState([]);
   const markerRef = useRef(null);
@@ -106,7 +104,6 @@ const MarkerMap = () => {
       socket.disconnect();
     };
   }, []);
-  console.log("positions", positions);
 
   useEffect(() => {
     // Update marker positions for all devices
@@ -146,7 +143,6 @@ const MarkerMap = () => {
   ]);
 
   const handleDateRangeChange = async (startDate, endDate) => {
-    console.log("first:", startDate, "last:", endDate);
     try {
       let filteredPositions = [];
       if (endDate) {
@@ -220,4 +216,4 @@ const MarkerMap = () => {
   );
 };
 
-export default MarkerMap;
+export default React.memo(MarkerMap);
