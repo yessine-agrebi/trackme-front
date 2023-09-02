@@ -128,7 +128,7 @@ const MarkerMap = () => {
     } else {
       setPolylineCoord([]); // Réinitialisation du tracé
     }
-  }, [polylineCoord]);
+  }, []);
 
   const coordinates = positions?.map(({ latitude, longitude }) => [
     latitude,
