@@ -19,7 +19,6 @@ const MarkerMap = () => {
   ]);
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState([]);
-  const [historyPositions, setHistoryPositions] = useState([]);
   const markerRef = useRef(null);
   const [polylineCoord, setPolylineCoord] = useState([]);
   const [isVisible, setisVisible] = useState(false);
@@ -123,19 +122,13 @@ const MarkerMap = () => {
   }, [positions]);
 
   useEffect(() => {
-    if (historyPositions.length > 0) {
-      const updatedPolylineCoord = historyPositions.map(
-        ({ latitude, longitude }) => [latitude, longitude]
-      );
-      setPolylineCoord(updatedPolylineCoord);
-
-      const lastPosition =
-        updatedPolylineCoord[updatedPolylineCoord.length - 1];
+    if (polylineCoord.length > 0) {
+      const lastPosition = polylineCoord[polylineCoord.length - 1];
       markerRef.current.setLatLng(lastPosition);
     } else {
       setPolylineCoord([]); // Réinitialisation du tracé
     }
-  }, [historyPositions]);
+  }, [polylineCoord]);
 
   const coordinates = positions?.map(({ latitude, longitude }) => [
     latitude,
@@ -143,6 +136,7 @@ const MarkerMap = () => {
   ]);
 
   const handleDateRangeChange = async (startDate, endDate) => {
+    console.log(startDate, endDate);
     try {
       let filteredPositions = [];
       if (endDate) {
@@ -154,8 +148,7 @@ const MarkerMap = () => {
         const response = await Api.get(`/history/${deviceId}/${startDate}`);
         filteredPositions = response.data;
       }
-
-      setHistoryPositions(filteredPositions);
+      setPolylineCoord(filteredPositions);
       setStartDate(startDate);
     } catch (error) {
       console.error(error.message);
